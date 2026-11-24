@@ -1,0 +1,13 @@
+../Core/Src/main.c:127:13:DWT_Init	1
+../Core/Src/main.c:140:13:delay_us	2
+../Core/Src/main.c:153:13:DHT22_Set_Pin_Output	1
+../Core/Src/main.c:168:13:DHT22_Set_Pin_Input	1
+../Core/Src/main.c:182:16:DHT22_Wait_For_Level	3
+../Core/Src/main.c:202:16:DHT22_Read	14
+../Core/Src/main.c:310:16:Read_Current	7
+../Core/Src/main.c:395:5:main	10
+../Core/Src/main.c:548:6:SystemClock_Config	3
+../Core/Src/main.c:594:13:MX_ADC1_Init	3
+../Core/Src/main.c:646:13:MX_USART2_UART_Init	2
+../Core/Src/main.c:679:13:MX_GPIO_Init	1
+../Core/Src/main.c:724:6:Error_Handler	1
