@@ -7,8 +7,6 @@ import getpass
 # CONFIGURATION THINGSPEAK
 # ==========================================
 
-API_KEY = getpass.getpass("Entrez votre nouvelle Write API Key : ")
-
 URL = "https://api.thingspeak.com/update"
 
 # ==========================================
@@ -46,10 +44,10 @@ scenarios = [
 # ENVOI DES DONNEES
 # ==========================================
 
-def envoyer_donnees(data):
+def envoyer_donnees(data, api_key, http_get=requests.get):
 
     params = {
-        "api_key": API_KEY,
+        "api_key": api_key,
         "field1": data["courant"],
         "field2": data["similarite"],
         "field3": data["anomalie"],
@@ -58,7 +56,7 @@ def envoyer_donnees(data):
     }
 
     try:
-        response = requests.get(
+        response = http_get(
             URL,
             params=params,
             timeout=15
@@ -78,28 +76,34 @@ def envoyer_donnees(data):
 # BOUCLE PRINCIPALE
 # ==========================================
 
-print("\n================================")
-print(" SIMULATION ESP8266 - THINGSPEAK")
-print("================================")
+def main():
+    api_key = getpass.getpass("Entrez votre nouvelle Write API Key : ")
+    print("\n================================")
+    print(" SIMULATION ESP8266 - THINGSPEAK")
+    print("================================")
 
-print("Demarrage de la simulation...\n")
+    print("Demarrage de la simulation...\n")
 
-index = 0
+    index = 0
 
-while True:
+    while True:
 
-    data = scenarios[index]
+        data = scenarios[index]
 
-    print("\n----------", data["nom"], "----------")
-    print("Courant      :", data["courant"], "A")
-    print("Similarite   :", data["similarite"], "%")
-    print("Anomalie     :", data["anomalie"])
-    print("Etat NanoEdge:", data["etat"])
-    print("Temperature  :", data["temperature"], "C")
+        print("\n----------", data["nom"], "----------")
+        print("Courant      :", data["courant"], "A")
+        print("Similarite   :", data["similarite"], "%")
+        print("Anomalie     :", data["anomalie"])
+        print("Etat NanoEdge:", data["etat"])
+        print("Temperature  :", data["temperature"], "C")
 
-    envoyer_donnees(data)
+        envoyer_donnees(data, api_key)
 
-    index = (index + 1) % len(scenarios)
+        index = (index + 1) % len(scenarios)
 
-    print("\nProchaine transmission dans 20 secondes...")
-    time.sleep(20)
+        print("\nProchaine transmission dans 20 secondes...")
+        time.sleep(20)
+
+
+if __name__ == "__main__":
+    main()
